@@ -8,6 +8,8 @@ import cv2
 from PIL import ImageFont, ImageDraw, ImageColor, Image
 import numpy as np
 
+from .models import Request
+
 
 FONT_PATH = str(settings.BASE_DIR) + static('font/Arial.ttf')
 
@@ -25,6 +27,8 @@ def video_download(request):
 
         response =  FileResponse(open(filename, 'rb'), as_attachment=True, content_type='video/webm')
         os.remove(filename)
+
+        Request.objects.create(text=text)
 
         return response
 
